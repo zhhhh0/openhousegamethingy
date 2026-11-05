@@ -41,12 +41,6 @@ const tilemap = [
 ];
 window.onload = function(){
 	board= document.getElementById("board");
-	board.height=boardheight;
-	board.width=boardwidth;
-	context=board.getContext("2d");
-    loadimages();
-    loadmap();
-    update();
     
 }
 function startGame() {
