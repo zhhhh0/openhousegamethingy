@@ -1,10 +1,24 @@
-﻿body
-{
-    text-align: right;
+﻿
+#body{
+    background-color: darkblue;
+}
+#board {
+    position: absolute;
+    left: 800px;
+    background-color: black;
 }
 
-#board {
-    background-color: black 
+#compiler {
+    position: absolute;
+    left: 10px;
+    background-color: darkgrey;
+    width: 54%;
+    height: 95%;
+    resize: none;
+    flex: 1;
+    outline: none;
+    font-size: 20px;
+    
 }
 #main-menu {
     position: fixed;

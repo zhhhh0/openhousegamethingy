@@ -5,6 +5,8 @@ let board;
 const columncount = 19;
 const rowcount = 21;
 const tilesize=32;
+const compilerwidth=750;
+const compilerheight=1000;//1000
 const boardwidth=columncount * tilesize;
 const boardheight=rowcount * tilesize;
 let context;
@@ -41,20 +43,28 @@ const tilemap = [
 ];
 window.onload = function(){
 	board= document.getElementById("board");
+
+
 	board.height=boardheight;
 	board.width=boardwidth;
+    
+    
 	context=board.getContext("2d");
+
     loadimages();
     loadmap();
     update();
     
 }
 function startGame() {
-    menu=document.getElementById("main-menu");
+    let menu=document.getElementById("main-menu");
     menu.style.opacity="0"
+    setTimeout(() => {
+        menu.remove();
+    }, 1500);
 }
 function loadmap(){
-    walls.clear;
+    walls.clear();
     for(let i = 0; i < rowcount; i++){
         for(let j = 0; j < columncount; j++){
             let tilemapchar= tilemap[i][j];
