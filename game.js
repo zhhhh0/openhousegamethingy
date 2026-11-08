@@ -5,8 +5,7 @@ let board;
 const columncount = 19;
 const rowcount = 21;
 const tilesize=32;
-const compilerwidth=750;
-const compilerheight=1000;//1000
+
 const boardwidth=columncount * tilesize;
 const boardheight=rowcount * tilesize;
 let context;
@@ -48,12 +47,13 @@ window.onload = function(){
 	board.height=boardheight;
 	board.width=boardwidth;
     
-    
+   
 	context=board.getContext("2d");
 
     loadimages();
     loadmap();
     update();
+   
     
 }
 function startGame() {
@@ -103,7 +103,7 @@ function update(){
 }
 function draw(){
     context.drawImage(seth.image,seth.x,seth.y,seth.width,seth.height);
-    for(let w of walls.values()){
+     for(let w of walls.values()){
         context.drawImage(w.image,w.x,w.y,w.width,w.height);
     }
     for(let b of burgers.values()){
@@ -122,4 +122,42 @@ class block {
         this.startx=x;
         this.starty=y;
     }
+}
+function checkdir(str){
+    if(str.startsWith("moveleft(") && str.endsWith(")") && /^\d+$/.test(str.replace("moveleft(","").replace(")",""))) return 'L';
+    else if(str.startsWith("moveright(") && str.endsWith(")") && /^\d+$/.test(str.replace("moveright(","").replace(")",""))) return 'R';
+    else if(str.startsWith("moveup(") && str.endsWith(")") && /^\d+$/.test(str.replace("moveup(","").replace(")",""))) return 'U';
+    else if(str.startsWith("movedown(") && str.endsWith(")") && /^\d+$/.test(str.replace("movedown(","").replace(")",""))) return 'D';
+    else return 0;
+}
+function error(arr){
+        for(let i = 0; i < arr.length;i++){
+            if(!checkdir(arr[i].trim())){
+                return true;
+            }
+        }
+        return false;
+        
+}
+function RunCode() {
+    let compiler=document.getElementById("compiler");
+    let lines = compiler.value.split(/\r?\n/);
+    let runbutton=document.getElementById("runbutton");
+    if(error(lines)){
+        runbutton.textContent  ="Error in code!";
+        setTimeout(() => {
+        runbutton.textContent="Run";
+        }, 1500);
+        return;
+    }
+    else{
+        console.log("Code ran successfully!");
+        runbutton.textContent  ="Code ran successfully!";
+        setTimeout(() => {
+        runbutton.textContent="Run";
+        }, 1500);
+    }
+    
+    
+    
 }

@@ -8,18 +8,6 @@
     background-color: black;
 }
 
-#compiler {
-    position: absolute;
-    left: 10px;
-    background-color: darkgrey;
-    width: 54%;
-    height: 95%;
-    resize: none;
-    flex: 1;
-    outline: none;
-    font-size: 20px;
-    
-}
 #main-menu {
     position: fixed;
     top: 0;
@@ -61,3 +49,31 @@
         cursor: pointer;
        
     }
+#runbutton {
+    position: absolute;
+    top: 620px;
+    left: 565px;
+    padding: 15px 35px;
+    font-size: 20px;
+    cursor: pointer;
+    width: 200px;
+    height: 55px;
+    z-index: 2;
+
+   display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+#compiler {
+    position: absolute;
+    left: 10px;
+    width: 750px;
+    height: 660px;
+    background-color: darkgrey;
+    resize: none;
+    flex: 1;
+    border-radius: 10px;
+    outline: none;
+    font-size: 20px;
+}
