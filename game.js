@@ -468,7 +468,7 @@ let suffer = [
       tilemap=suffer;
       burgers.clear();
       walls.clear();
-      seth.clear();
+      seth=(0,0,0,0,0)
       loadmap();
       
   }
