@@ -129,7 +129,7 @@
     "XbbbbbbbbbbbbbbbbbbX",
     "XbbbbbbbbbbbbbbbbbbX",
     "XbbbbbbbbbbbbbbbbbbX",
-    "XbbbbbbbbSbbbbbbbbbX", // Seth placed in the middle of the burgers
+    "XbbbbbbbbSbbbbbbbbbX",
     "XbbbbbbbbbbbbbbbbbbX",
     "XbbbbbbbbbbbbbbbbbbX",
     "XbbbbbbbbbbbbbbbbbbX",
