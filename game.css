@@ -49,6 +49,23 @@
         cursor: pointer;
        
     }
+#reloadbutton {
+    position: absolute;
+    top: 565px;
+    left: 565px;
+    padding: 15px 35px;
+    font-size: 20px;
+    cursor: pointer;
+    width: 200px;
+    height: 57px;
+    z-index: 2;
+    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
 #runbutton {
     position: absolute;
     top: 620px;

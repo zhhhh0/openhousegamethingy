@@ -15,11 +15,12 @@ let wallimage;
 let burgerimage;
 let collisionsound;
 let collectsound;
-let scorenum = 0;
+let scorenum;
 
 const walls = new Set();
 let seth;
 const burgers = new Set();
+
 const tilemap = [
     "XXXXXXXXXXXXXXXXXXX",
     "X        X        X",
@@ -59,19 +60,18 @@ window.onload = function(){
    
     
 }
-
+blinktime=50;
 function blink(){
     setTimeout(() => { seth.visible = 0; }, 100);
-        setTimeout(() => { seth.visible = 1; }, 200);
+              
+        setTimeout(() => { seth.visible = 0; }, 1*blinktime);
+        setTimeout(() => { seth.visible = 1; }, 2*blinktime);
         
-        setTimeout(() => { seth.visible = 0; }, 300);
-        setTimeout(() => { seth.visible = 1; }, 400);
+        setTimeout(() => { seth.visible = 0; }, 3*blinktime);
+        setTimeout(() => { seth.visible = 1; }, 4*blinktime);
         
-        setTimeout(() => { seth.visible = 0; }, 500);
-        setTimeout(() => { seth.visible = 1; }, 600);
-        
-        setTimeout(() => { seth.visible = 0; }, 700);
-        setTimeout(() => { seth.visible = 1; }, 800);
+        setTimeout(() => { seth.visible = 0; }, 5*blinktime);
+        setTimeout(() => { seth.visible = 1; }, 6*blinktime);
 }
 function opacitychange(b){
         setTimeout(() => { b.opacity=0.8; }, 100);
@@ -92,6 +92,7 @@ function startGame() {
 }
 function loadmap(){
     walls.clear();
+    scorenum=0;
     for(let i = 0; i < rowcount; i++){
         for(let j = 0; j < columncount; j++){
             let tilemapchar= tilemap[i][j];
@@ -135,6 +136,11 @@ function update(){
     
     draw();
     setTimeout(update,50)
+}
+function reloadmap(){
+    clearInterval(moveInterval);
+     loadmap();
+     cd=false;
 }
 function draw(){
    context.clearRect(0, 0, board.width, board.height);
@@ -205,8 +211,13 @@ async function RunCode() {
         }, 1500);
         return;
     }
-    setTimeout(() => { cd=false; }, 5000);
-    if(cd) return;
+    if(cd) {
+        runbutton.textContent  ="Code is already running!";
+        setTimeout(() => {
+        runbutton.textContent="Run";
+        }, 1500);
+        return;
+    }
     cd=true;
     runbutton.textContent  ="Code ran successfully!";
         setTimeout(() => {
@@ -217,7 +228,8 @@ async function RunCode() {
               console.log(moves[i].dir+" "+moves[i].value);
               await movedirection(moves[i].dir,moves[i].value);
         }
-        loadmap();
+        await resolve;
+        reloadmap();
     
 }
 function collision(dir){
@@ -227,22 +239,22 @@ function collision(dir){
         if(dir=='R'){
                 seth.x+=tilesize;
                 blink();
-                setTimeout(() => { seth.x-=tilesize; }, 850);
+                setTimeout(() => { seth.x-=tilesize; }, blinktime*6+50);
         }
         else if(dir=='L'){
                 seth.x-=tilesize;
                 blink();
-                setTimeout(() => { seth.x+=tilesize; }, 850);
+                setTimeout(() => { seth.x+=tilesize; },  blinktime*6+50);
             }
         else if(dir=='U'){
                 seth.y-=tilesize;
                 blink();
-                setTimeout(() => { seth.y+=tilesize; }, 850);
+                setTimeout(() => { seth.y+=tilesize; }, blinktime*6+50);
             }
         else if(dir=='D'){
                 seth.y+=tilesize;
                 blink();
-                setTimeout(() => { seth.y-=tilesize; }, 850);
+                setTimeout(() => { seth.y-=tilesize; }, blinktime*6+50);
         }
 }
 function burgercollect(r, c){
@@ -255,13 +267,13 @@ function burgercollect(r, c){
     }
 }
 function movedirection(dir,value){
-    let row = Math.floor(seth.y / tilesize);
-    let col = Math.floor(seth.x / tilesize);
+   
     let steps=0;
 
     return new Promise((resolve) => {
-        let moveInterval = setInterval(() => {
-
+        moveInterval = setInterval(() => {
+            let row = Math.floor(seth.y / tilesize);
+            let col = Math.floor(seth.x / tilesize);
             if (steps >= value) {
                 clearInterval(moveInterval);
                 resolve();
@@ -284,6 +296,7 @@ function movedirection(dir,value){
             if (tilemap[nextRow][nextCol] == 'X') {
                 collision(dir);
                 steps++;
+
                 
                 if (steps >= value) {
                     clearInterval(moveInterval);
@@ -294,6 +307,7 @@ function movedirection(dir,value){
 
 
             if (tilemap[nextRow][nextCol] == 'b') {
+                 tilemap[nextRow][nextCol]=' ';
                 scorenum++;
                 playcollectsound();
                 burgercollect(nextRow, nextCol);
@@ -308,6 +322,6 @@ function movedirection(dir,value){
 
             steps++;
 
-        }, 1000);
+        }, 450);
     }); 
 }
