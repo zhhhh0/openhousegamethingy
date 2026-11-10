@@ -20,8 +20,123 @@ let scorenum;
 const walls = new Set();
 let seth;
 const burgers = new Set();
-
-const tilemap = [
+const permutation = [ [
+    "XXXXXXXXXXXXXXXXXXX",
+    "X b      X      b X",
+    "X XX XXX X XXX XX X",
+    "X                  X",
+    "X XX X XXXXX X XX X",
+    "X    X        X    X",
+    "XXXX XXXX XXXX XXXX",
+    "OOOX X        X XOOO",
+    "XXXX X XXrXX X XXXX",
+    "O                  O",
+    "XXXX X XXXXX X XXXX",
+    "OOOX X        X XOOO",
+    "XXXX X XXXXX X XXXX",
+    "X        X         X",
+    "X XX XXX X XXX XX X",
+    "X  X     S     X  X",
+    "XX X X XXXXX X X XX",
+    "X    X    X    X   X",
+    "X XXXXXX X XXXXXX X",
+    "X  b           b   X",
+    "XXXXXXXXXXXXXXXXXXX"
+  ],
+  [
+    "XXXXXXXXXXXXXXXXXXX",
+    "X        X        X",
+    "X XX XXX X XXX XX X",
+    "X    b         b   X",
+    "X XX X XXXXX X XX X",
+    "X    X        X    X",
+    "XXXX XXXX XXXX XXXX",
+    "OOOX X        X XOOO",
+    "XXXX X XXrXX X XXXX",
+    "O                  O",
+    "XXXX X XXXXX X XXXX",
+    "OOOX X        X XOOO",
+    "XXXX X XXXXX X XXXX",
+    "X        X         X",
+    "X XX XXX X XXX XX X",
+    "X  X     S     X  X",
+    "XX X X XXXXX X X XX",
+    "X    X    X    X   X",
+    "X XXXXXX X XXXXXX X",
+    "X      b       b   X",
+    "XXXXXXXXXXXXXXXXXXX"
+  ] ,
+  [
+    "XXXXXXXXXXXXXXXXXXX",
+    "X        X        X",
+    "X XX XXX X XXX XX X",
+    "X                  X",
+    "X XX X XXXXX X XX X",
+    "X  b X        X b  X",
+    "XXXX XXXX XXXX XXXX",
+    "OOOX X        X XOOO",
+    "XXXX X XXrXX X XXXX",
+    "O                  O",
+    "XXXX X XXXXX X XXXX",
+    "OOOX X        X XOOO",
+    "XXXX X XXXXX X XXXX",
+    "X        X         X",
+    "X XX XXX X XXX XX X",
+    "X  X     S     X  X",
+    "XX X X XXXXX X X XX",
+    "X    X    X    X   X",
+    "X XXXXXX X XXXXXX X",
+    "X  b           b   X",
+    "XXXXXXXXXXXXXXXXXXX"
+  ],
+  [
+    "XXXXXXXXXXXXXXXXXXX",
+    "X        X        X",
+    "X XX XXX X XXX XX X",
+    "X                  X",
+    "X XX X XXXXX X XX X",
+    "X    X        X    X",
+    "XXXX XXXX XXXX XXXX",
+    "OOOX X        X XOOO",
+    "XXXX X XXrXX X XXXX",
+    "O                  O",
+    "XXXX X XXXXX X XXXX",
+    "OOOX X        X XOOO",
+    "XXXX X XXXXX X XXXX",
+    "X    b   X   b     X",
+    "X XX XXX X XXX XX X",
+    "X  X     S     X  X",
+    "XX X X XXXXX X X XX",
+    "X    X    X    X   X",
+    "X XXXXXX X XXXXXX X",
+    "X  b           b   X",
+    "XXXXXXXXXXXXXXXXXXX"
+  ]
+  [
+    "XXXXXXXXXXXXXXXXXXX",
+    "XXXXXXXXXXXXXXXXXXX",
+    "XXXXXXXXXXXXXXXXXXX",
+    "XXXXXXXXXXXXXXXXXXX",
+    "XXXXXXXXXXXXXXXXXXX",
+    "XXXXXXXXXXXXXXXXXXX",
+    "XXXXXXXXXXXXXXXXXXX",
+    "XXXXXXXXXXXXXXXXXXX",
+    "XXXXXXXXXXXXXXXXXXX",
+    "XXXXXXXXXXXXXXXXXXX",
+    "XXXXXXXXXXXXXXXXXXX",
+    "XXXXXXXXXXXXXXXXXXX",
+    "XXXXXXXXXXXXXXXXXXX",
+    "XXXXXXXXXXXXXXXXXXX",
+    "XXXXXXXXXXXXXXXXXXX",
+    "XXXXXXXXX S XXXXXXX", 
+    "XXXXXXXXXXXXXXXXXXX",
+    "XXXXXXXXXXXXXXXXXXX",
+    "XXXXXXXXXXXXXXXXXXX",
+    "XXXXXXXXXXXXXXXXXXX",
+    "XXXXXXXXXXXXXXXXXXX"
+  ],
+ ];
+let tilemap = [
     "XXXXXXXXXXXXXXXXXXX",
     "X        X        X",
     "X XX XXX X XXX XX X",
@@ -30,7 +145,7 @@ const tilemap = [
     "X    X       X    X",
     "XXXX XXXX XXXX XXXX",
     "OOOX X       X XOOO",
-    "XXXX X XXrXX X XXXX",
+    "XXXX X XX XX X XXXX",
     "O b               O",
     "XXXX X XXXXX X XXXX",
     "OOOX X       X XOOO",
@@ -138,9 +253,10 @@ function update(){
     setTimeout(update,50)
 }
 function reloadmap(){
-    clearInterval(moveInterval);
+     clearInterval(moveInterval);
      loadmap();
      cd=false;
+    
 }
 function draw(){
    context.clearRect(0, 0, board.width, board.height);
@@ -325,3 +441,34 @@ function movedirection(dir,value){
         }, 450);
     }); 
 }
+let suffer = [
+    "XXXXXXXXXXXXXXXXXXX",
+    "XbbbbbbbbbbbbbbbbbX",
+    "XbbbbbbbbbbbbbbbbbX",
+    "XbbbbbbbbbbbbbbbbbX",
+    "XbbbbbbbbbbbbbbbbbX",
+    "XbbbbbbbbbbbbbbbbbX",
+    "XbbbbbbbbbbbbbbbbbX",
+    "XbbbbbbbbbbbbbbbbbX",
+    "XbbbbbbbbbbbbbbbbbX",
+    "XbbbbbbbbbbbbbbbbbX",
+    "XbbbbbbbbbbbbbbbbbX",
+    "XbbbbbbbbbbbbbbbbbX",
+    "XbbbbbbbbbbbbbbbbbX",
+    "XbbbbbbbbbbbbbbbbbX",
+    "XbbbbbbbbXbbbbbbbbX",
+    "XbbbbbbbXSXbbbbbbbX",
+    "XbbbbbbbbXbbbbbbbbX",
+    "XbbbbbbbbbbbbbbbbbX",
+    "XbbbbbbbbbbbbbbbbbX",
+    "XbbbbbbbbbbbbbbbbbX",
+    "XXXXXXXXXXXXXXXXXXX"
+  ];
+  function runmod(){
+      tilemap=suffer;
+      burgers.clear();
+      walls.clear();
+      seth.clear();
+      loadmap();
+      
+  }
