@@ -114,3 +114,12 @@
     z-index: 2;
     font-family: Lucida Sans Typewriter;
 }
+#timer {
+    position: absolute;
+    top: -2px;
+    left: 1300px;
+    font-size: 20px;
+    color: white;
+    z-index: 2;
+    font-family: Lucida Sans Typewriter;
+}

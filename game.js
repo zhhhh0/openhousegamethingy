@@ -16,11 +16,13 @@ let burgerimage;
 let collisionsound;
 let collectsound;
 let scorenum;
+let time=60;
+let done;
 
 const walls = new Set();
 let seth;
 const burgers = new Set();
-const permutation = [ [
+const permutation = [ [      // 6 maps
     "XXXXXXXXXXXXXXXXXXX",
     "X b      X      b X",
     "X XX XXX X XXX XX X",
@@ -111,7 +113,7 @@ const permutation = [ [
     "X XXXXXX X XXXXXX X",
     "X  b           b   X",
     "XXXXXXXXXXXXXXXXXXX"
-  ]
+  ],
   [
     "XXXXXXXXXXXXXXXXXXX",
     "XXXXXXXXXXXXXXXXXXX",
@@ -135,8 +137,7 @@ const permutation = [ [
     "XXXXXXXXXXXXXXXXXXX",
     "XXXXXXXXXXXXXXXXXXX"
   ],
- ];
-let tilemap = [
+  [
     "XXXXXXXXXXXXXXXXXXX",
     "X        X        X",
     "X XX XXX X XXX XX X",
@@ -158,7 +159,32 @@ let tilemap = [
     "X XXXXXX X XXXXXX X",
     "X  b           b  X",
     "XXXXXXXXXXXXXXXXXXX" 
-];
+],
+ [
+    "XXXXXXXXXXXXXXXXXXX",
+    "XbbbbbbbbbbbbbbbbbX",
+    "XbbbbbbbbbbbbbbbbbX",
+    "XbbbbbbbbbbbbbbbbbX",
+    "XbbbbbbbbbbbbbbbbbX",
+    "XbbbbbbbbbbbbbbbbbX",
+    "XbbbbbbbbbbbbbbbbbX",
+    "XbbbbbbbbbbbbbbbbbX",
+    "XbbbbbbbbbbbbbbbbbX",
+    "XbbbbbbbbbbbbbbbbbX",
+    "XbbbbbbbbbbbbbbbbbX",
+    "XbbbbbbbbbbbbbbbbbX",
+    "XbbbbbbbbbbbbbbbbbX",
+    "XbbbbbbbbbbbbbbbbbX",
+    "XbbbbbbbbXbbbbbbbbX",
+    "XbbbbbbbXSXbbbbbbbX",
+    "XbbbbbbbbXbbbbbbbbX",
+    "XbbbbbbbbbbbbbbbbbX",
+    "XbbbbbbbbbbbbbbbbbX",
+    "XbbbbbbbbbbbbbbbbbX",
+    "XXXXXXXXXXXXXXXXXXX"
+  ]
+ ];
+let tilemap = permutation[5];
 window.onload = function(){
 	board= document.getElementById("board");
 
@@ -256,6 +282,9 @@ function reloadmap(){
      clearInterval(moveInterval);
      loadmap();
      cd=false;
+     time=60;
+     let runbutton=document.getElementById("runbutton");
+            runbutton.textContent  ="Run";
     
 }
 function draw(){
@@ -274,6 +303,8 @@ function draw(){
     }
     let score=document.getElementById("score");
     score.textContent="Score: "+scorenum;
+    let timeelement=document.getElementById("timer");
+    timeelement.textContent=time+"s";
 }
 class block {
     constructor(image,x,y,width,height){
@@ -296,6 +327,16 @@ function playcollisionsound(){
 function playcollectsound(){
     let soundclone = collectsound.cloneNode(true);
     soundclone.play();
+}
+function starttimer(){
+        timerinterval = setInterval(() => {
+        if(time <= 0){
+            clearInterval(timerinterval);
+        }
+        else{
+            time--;
+        }
+    }, 1000);
 }
 function checkdir(str){
     if(str.startsWith("moveleft(") && str.endsWith(")") && /^\d+$/.test(str.replace("moveleft(","").replace(")",""))) return {dir: 'L',val: Number(str.replace("moveleft(","").replace(")",""))};
@@ -334,7 +375,9 @@ async function RunCode() {
         }, 1500);
         return;
     }
+    done=false;
     cd=true;
+    starttimer();
     runbutton.textContent  ="Code ran successfully!";
         setTimeout(() => {
         runbutton.textContent="Run";
@@ -344,8 +387,23 @@ async function RunCode() {
               console.log(moves[i].dir+" "+moves[i].value);
               await movedirection(moves[i].dir,moves[i].value);
         }
-        await resolve;
-        reloadmap();
+        clearInterval(timerinterval);
+        if(burgers.size==0&&done){
+            let runbutton=document.getElementById("runbutton");
+            runbutton.textContent  ="You won!";
+            setTimeout(() => {
+             runbutton.textContent = "Seth is full!";
+             }, 1000);
+             
+       
+        }
+        else if(done){
+            let runbutton=document.getElementById("runbutton");
+            runbutton.textContent  ="You lost!";
+            setTimeout(() => {
+            runbutton.textContent = "Seth has no more energy!";
+            }, 1500);
+        }
     
 }
 function collision(dir){
@@ -392,6 +450,7 @@ function movedirection(dir,value){
             let col = Math.floor(seth.x / tilesize);
             if (steps >= value) {
                 clearInterval(moveInterval);
+                done=true;
                 resolve();
                 return;
             }
@@ -407,6 +466,7 @@ function movedirection(dir,value){
             else {
                 clearInterval(moveInterval);
                 resolve();
+                done=true;
                 return;
             }
             if (tilemap[nextRow][nextCol] == 'X') {
@@ -418,6 +478,7 @@ function movedirection(dir,value){
                     clearInterval(moveInterval);
                     resolve();
                 }
+                done=true;
                 return;
             }
 
@@ -441,34 +502,14 @@ function movedirection(dir,value){
         }, 450);
     }); 
 }
-let suffer = [
-    "XXXXXXXXXXXXXXXXXXX",
-    "XbbbbbbbbbbbbbbbbbX",
-    "XbbbbbbbbbbbbbbbbbX",
-    "XbbbbbbbbbbbbbbbbbX",
-    "XbbbbbbbbbbbbbbbbbX",
-    "XbbbbbbbbbbbbbbbbbX",
-    "XbbbbbbbbbbbbbbbbbX",
-    "XbbbbbbbbbbbbbbbbbX",
-    "XbbbbbbbbbbbbbbbbbX",
-    "XbbbbbbbbbbbbbbbbbX",
-    "XbbbbbbbbbbbbbbbbbX",
-    "XbbbbbbbbbbbbbbbbbX",
-    "XbbbbbbbbbbbbbbbbbX",
-    "XbbbbbbbbbbbbbbbbbX",
-    "XbbbbbbbbXbbbbbbbbX",
-    "XbbbbbbbXSXbbbbbbbX",
-    "XbbbbbbbbXbbbbbbbbX",
-    "XbbbbbbbbbbbbbbbbbX",
-    "XbbbbbbbbbbbbbbbbbX",
-    "XbbbbbbbbbbbbbbbbbX",
-    "XXXXXXXXXXXXXXXXXXX"
-  ];
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
   function runmod(){
-      tilemap=suffer;
+      tilemap=permutation[getRandomInt(0,permutation.length-1)];
       burgers.clear();
       walls.clear();
       seth=(0,0,0,0,0)
-      loadmap();
-      
+      cd=false;
+      loadmap();      
   }
